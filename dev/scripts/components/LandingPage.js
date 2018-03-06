@@ -15,6 +15,7 @@ class LandingPage extends React.Component {
             lyrics: "",
             songTrackPlayer: "",
             songImage: "",
+            songName: "",
             visible: false
 
         }
@@ -22,6 +23,7 @@ class LandingPage extends React.Component {
         this.getSongArtistAPI = this.getSongArtistAPI.bind(this);
         this.getSpotifyTrack = this.getSpotifyTrack.bind(this);
         this.setVisible = this.setVisible.bind(this);
+        this.removePopUp = this.removePopUp.bind(this);
     }
     componentDidMount() {
         const url = new URL(location.href);
@@ -93,18 +95,26 @@ class LandingPage extends React.Component {
                 .then(res => {
                     const spotifyTrackPlay = res.data.tracks.items[0].uri;
                     const spotifyAlbumImage = res.data.tracks.items[0].album.images[0].url;
+                    
                     console.log(spotifyAlbumImage, spotifyTrackPlay);
                     
                     const TrackLink = `https://open.spotify.com/embed?uri=${spotifyTrackPlay}`;
                     this.setState({
                         songTrackPlayer: TrackLink,
-                        songImage: spotifyAlbumImage
+                        songImage: spotifyAlbumImage,
+                        songName: songName
                     });
                 })
             })
     }
 
     setVisible() {
+        this.setState(prev => ({
+            visible: !prev.visible
+        }));
+    }
+
+    removePopUp() {
         this.setState(prev => ({
             visible: !prev.visible
         }));
@@ -146,6 +156,8 @@ class LandingPage extends React.Component {
                         lyrics={this.state.lyrics}
                         songTrackPlayer={this.state.songTrackPlayer}
                         songImage={this.state.songImage}
+                        removePopUp={this.removePopUp}
+                        songName={this.state.songName}
                     />
                 </div>
                 {/* <div>

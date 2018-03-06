@@ -62,7 +62,6 @@ p {
     float: left;
     text-shadow: lighten(mediumvioletred,30) 3px -6px 20px;
     // text-shadow: #ffffff 3px -6px 10px;
-    
 }
 
 
@@ -172,35 +171,80 @@ p {
 // SpotifyPopUp component styles
 
 .spotifyPopUpWrapper {
-  width: 90%;
-  float: left;
+  width: 100%;
+}
+
+h3 {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  margin: 0;
+  padding-bottom: 50px;
 }
 
 .popUpLeft {
   float: left;
+  width: calc(45% - 30px);
+  margin-right: 30px;
+  min-height: 750px;
+  max-height: 800px;
+}
+
+.spotifyPopUpWrapper p {
+  float: left;
+  width: calc(55% - 40px);
+  font-size: 30px;
+  color: black;
+  line-height: 150px;
+  background-color: white;
+  max-height: 750px;
+  overflow: scroll;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .popUpLeft img {
   float: left;
+  width: 100%;
 }
 
 iframe {
   float: left;
+  width: 100%;
+  margin-bottom: 30px;
 }
 
 #popUp {
-  height: 100vh;
-  width: 100vw;
-  background-color: white;
+  height: 80vh;
+  width: 95%;
+  background-color: rgb(29, 25, 25);
   transition: transform 400ms ease-in;
   float: left;
+  position: relative;
 }
 #popUp.slideIn {
-  transform: translateX(0);
+  padding: 80px 25px;
+  position: absolute;
+  top: 600px;
+  transform: translateX(-50%);
+  left: 50%;
+  max-width: 1400px;
 }
 
 #popUp.slideOut {
   transform: translateX(-100%);
+  padding: 80px 25px;
+  position: absolute;
+  top: 600px;
+}
+
+.closePopUp {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
 }
 
 .flicker-1 {
