@@ -2,7 +2,7 @@ import React from 'react';
 
 const SongInfo = (props) => {
         return (
-            <div className="songCard">
+            <div className="songCard clearfix">
                 <ul className="clearfix songlist">
                     <li
                         className="songArtist">{props.song.artist}
@@ -20,12 +20,16 @@ const SongInfo = (props) => {
                         )
                     })}
                 </ul>
-                <button 
-                    onClick={() => {props.getSongArtistAPI(props.song.name, props.song.artist); props.getSpotifyTrack(props.song.name, props.song.artist);
-                    props.setVisible();}}
-                    >
-                    Slay
-                </button>
+                <div className="buttonContainer clearfix">
+                    <button 
+                        onClick={() => {props.getSongArtistAPI(props.song.name, props.song.artist); props.getSpotifyTrack(props.song.name, props.song.artist);
+                        props.setVisible();}}
+                        className="slayButton"
+                        >
+                        Slay
+                    </button>
+                </div>
+
             </div>
         );
 }

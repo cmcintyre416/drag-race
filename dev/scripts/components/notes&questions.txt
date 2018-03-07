@@ -3,5 +3,12 @@ QUESTIONS
 - wrap li in a tags for semanticness?
 
 
-
-(`${config.noShadeAPIURL}/${e.getSeason}/lipsyncs`
+- seasonTiles need focus
+- spacing needs some lovin
+- scrollbar on pop up needs fixing
+- scrollbar border visibility needs fixing
+- if/else for undefined lyrics
+- login needs some attention
+    - moved to right
+- colours everywhere 
+- smoothscroll on season click

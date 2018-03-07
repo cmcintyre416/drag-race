@@ -2,8 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import SongInfo from './SongInfo';
 import SpotifyPopUp from './SpotifyPopUp'
+import { Scrollbars } from 'react-custom-scrollbars';
 import tokens from '../tokens';
 import qs from 'qs';
+import AnchorLink from 'react-anchor-link-smooth-scroll'
 
 
 class LandingPage extends React.Component {
@@ -16,8 +18,7 @@ class LandingPage extends React.Component {
             songTrackPlayer: "",
             songImage: "",
             songName: "",
-            visible: false
-
+            visible: false,
         }
         this.handleClick = this.handleClick.bind(this);
         this.getSongArtistAPI = this.getSongArtistAPI.bind(this);
@@ -45,8 +46,8 @@ class LandingPage extends React.Component {
     }
     
     getSongArtistAPI(e1, e2) {
-        const songName = e1
-        const songArtist = e2
+        const songName = e1;
+        const songArtist = e2;
         // console.log(songName, songArtist);
 
         axios({
@@ -66,7 +67,14 @@ class LandingPage extends React.Component {
             },
         })
         .then((data) => {
-            const lyricsData = data.data.message.body.lyrics.lyrics_body
+            let lyricsData;
+
+            if (data.data.message.body.lyrics.lyrics_body.length === 0) {
+                lyricsData = `Im sorry to inform you but ${e1} by ${e2} is not currently available. We're working on it and will have things up and running soon. For now, enjoy the sweet voice of Rick Astley.`
+            } else {
+                lyricsData = data.data.message.body.lyrics.lyrics_body;
+            }
+
             console.log(data.data.message.body.lyrics.lyrics_body);
             this.setState({
                 lyrics: lyricsData,
@@ -93,9 +101,25 @@ class LandingPage extends React.Component {
                     }
                 })
                 .then(res => {
-                    const spotifyTrackPlay = res.data.tracks.items[0].uri;
-                    const spotifyAlbumImage = res.data.tracks.items[0].album.images[0].url;
-                    
+                    let spotifyTrackPlay;
+                    if (res.data.tracks.items[0] === undefined) {
+                        spotifyTrackPlay = 'spotify:track:4uLU6hMCjMI75M1A2tKUQC';
+                    } 
+                    else {
+                        spotifyTrackPlay = res.data.tracks.items[0].uri;
+                    }
+
+                    let spotifyAlbumImage;
+                    if (res.data.tracks.items[0] === undefined) {
+                        spotifyAlbumImage = 'https://cnet1.cbsistatic.com/img/c9h3oM_lU2i63tgOQnmtHyoWhyU=/fit-in/x/2010/02/24/4bf2fb50-fdbe-11e2-8c7c-d4ae52e62bcc/album-rick-astley-greatest-hits.jpg';
+                    } else {
+                        spotifyAlbumImage = res.data.tracks.items[0].album.images[0].url;
+                    }
+
+                    console.log(spotifyTrackPlay);
+
+                    console.log(res.data.tracks.items[0]);
+
                     console.log(spotifyAlbumImage, spotifyTrackPlay);
                     
                     const TrackLink = `https://open.spotify.com/embed?uri=${spotifyTrackPlay}`;
@@ -119,24 +143,56 @@ class LandingPage extends React.Component {
             visible: !prev.visible
         }));
     }
+
     
     render() {
         return (
             <div className="wrapper clearfix">
-                <a href="https://drag-race.herokuapp.com/auth">Login in with spotify</a>
-                <h1 className="flicker-1">Lip Sync <br/> <span className="headerSpan">For Your Life</span></h1>
-                    <ul className="clearfix">
-                        <li className="seasonTile" value="1" onClick={this.handleClick}>Season 1</li>
-                        <li className="seasonTile" value="2" onClick={this.handleClick}>Season 2</li>
-                        <li className="seasonTile" value="3" onClick={this.handleClick}>Season 3</li>
-                        <li className="seasonTile" value="4" onClick={this.handleClick}>Season 4</li>
-                        <li className="seasonTile" value="5" onClick={this.handleClick}>Season 5</li>
-                        <li className="seasonTile" value="6" onClick={this.handleClick}>Season 6</li>
-                        <li className="seasonTile" value="7" onClick={this.handleClick}>Season 7</li>
-                        <li className="seasonTile" value="8" onClick={this.handleClick}>Season 8</li>
-                        <li className="seasonTile" value="9" onClick={this.handleClick}>Season 9</li>
-                    </ul>
-                <div className="songCardWrapper">
+                <div className="mainWrapper">
+                    <div className="mainView">
+                    <a href="https://drag-race.herokuapp.com/auth">Login in with spotify</a>
+                    <div>
+                        <h1 className="mainHeader" >Lip Sync</h1>
+                    </div>
+                    <div>
+                        <h2 className="flicker-1 secondaryHeader">For You Life</h2>
+                        <h3 className="catchPhrase">Good Luck and Don't Fuck It Up</h3>
+                    </div>
+                </div>
+                <ul className="clearfix">
+                    <div className="tileContainer clearfix">
+                    <form action="">
+                        <div className="tileGroup clearfix">
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="1" id="season1" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season1">Season 1</label>
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="2" id="season2" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season2">Season 2</label>
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="3" id="season3" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season3">Season 3</label>
+                        </div>
+                        <div className="tileGroup clearfix">
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="4" id="season4" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season4">Season 4</label>
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="5" id="season5" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season5">Season 5</label>
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="6" id="season6" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season6">Season 6</label>
+                        </div>
+                        <div className="tileGroup clearfix">
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="7" id="season7" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season7">Season 7</label>
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="8" id="season8" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season8">Season 8</label>
+                            <input className="seasonInput"name="radioInputSeason" type="radio" value="9" id="season9" onClick={this.handleClick}></input>
+                            <label className="seasonTile" htmlFor="season9">Season 9</label>
+                        </div>
+                    </form>
+                        <AnchorLink href="#songCardWrapperID" className="seasonDownButton">Slay Songs</ AnchorLink>
+                    </div>
+                </ul>
+                </div>
+                <div className="songCardWrapper" id="songCardWrapperID">
+                <Scrollbars renderThumbVertical={props => <div {...props} className="thumb-vertical"/>}>
                     {this.state.songsFilteredBySeason.map((song, i) => {
                         return (
                             <SongInfo 
@@ -149,6 +205,7 @@ class LandingPage extends React.Component {
                             />
                         )
                     })}
+                </Scrollbars>
                 </div>
                 <div className="spotifyPopUpWrapper">
                     <SpotifyPopUp
@@ -160,6 +217,7 @@ class LandingPage extends React.Component {
                         songName={this.state.songName}
                     />
                 </div>
+
                 {/* <div>
                     <p>{this.state.lyrics}</p>
                     <iframe src={this.state.songTrackPlayer}

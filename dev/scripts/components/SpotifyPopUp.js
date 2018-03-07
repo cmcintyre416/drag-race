@@ -9,6 +9,7 @@ const SpotifyPopUp = (props) => (
         onClick={props.removePopUp}>
             𝗫
         </button>
+
         <div className="popUpLeft">
         <iframe src={props.songTrackPlayer}
             frameBorder="0" allow="encrypted-media" allowtransparency="true"></iframe>

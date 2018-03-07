@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import LandingPage from './components/LandingPage';
+import { Scrollbars } from 'react-custom-scrollbars';
 import {
   BrowserRouter as Router,
   Route, Link
